@@ -1,5 +1,5 @@
-defmodule Exmen.Discoverer do
-  @math_operands [:+, :-, :*, :/]
+defmodule Exmen.Discover.Middleware.Math do
+  @math_operands [:+, :-, :*, :/, :rem, :div]
 
   def find_mutations(ast), do: mutate(ast, [])
 
@@ -8,7 +8,9 @@ defmodule Exmen.Discoverer do
       :+ => :-,
       :- => :+,
       :* => :/,
-      :/ => :*
+      :/ => :*,
+      :rem => :/,
+      :div => :*
     }
 
     case {Keyword.get(meta, :import), Map.get(trans, operation)} do
