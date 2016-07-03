@@ -18,8 +18,11 @@ defmodule Exmen.Discoverer do
 
   defp run_middlewares(middlewares, ast) do
     middlewares
-    |> Enum.flat_map(fn %Middleware{module: module} ->
-      module.find_mutations(ast)
+    |> Enum.map(fn %Middleware{module: module}->
+      Task.async(fn ->
+        module.find_mutations(ast)
+       end)
     end)
+    |> Enum.flat_map(&Task.await/1)
   end
 end

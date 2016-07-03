@@ -15,8 +15,8 @@ defmodule Exmen.Discover.Middleware.Math do
   Find all possible mutations in `ast`
   """
   def find_mutations(ast), do: mutate(ast, [])
- 
-  defp mutate({operation, meta, args}, mutations) when operation in @math_operands do
+
+  def mutate({operation, meta, args}, mutations) when operation in @math_operands do
     trans = %{
       :+ => :-,
       :- => :+,
@@ -32,9 +32,10 @@ defmodule Exmen.Discover.Middleware.Math do
       {_, _}            -> mutate(args, mutations)
     end
   end
-  defp mutate({_, args}, mutations),    do: mutate(args, mutations)
-  defp mutate({_, _, args}, mutations), do: mutate(args, mutations)
-  defp mutate([head|tail], mutations),  do: mutate(tail, mutate(head, mutations))
-  defp mutate([], mutations),           do: mutations
-  defp mutate(_, mutations),            do: mutations
+
+  def mutate({_, args}, mutations),    do: mutate(args, mutations)
+  def mutate({_, _, args}, mutations), do: mutate(args, mutations)
+  def mutate([head|tail], mutations),  do: mutate(tail, mutate(head, mutations))
+  def mutate([], mutations),           do: mutations
+  def mutate(_, mutations),            do: mutations
 end
