@@ -1,4 +1,6 @@
 defmodule Exmen.Discover.Middleware.Math do
+  alias Exmen.Discover.Middleware
+
   @moduledoc """
   Mutator of Math operands
 
@@ -14,9 +16,11 @@ defmodule Exmen.Discover.Middleware.Math do
   @doc ~S"""
   Find all possible mutations in `ast`
   """
-  def find_mutations(ast), do: mutate(ast, [])
+  def find_mutations(ast) do
+    Middleware.run(ast, &mutate/1)
+  end
 
-  def mutate({operation, meta, args}, mutations) when operation in @math_operands do
+  def mutate({operation, meta, args}) when operation in @math_operands do
     trans = %{
       :+ => :-,
       :- => :+,
@@ -27,15 +31,11 @@ defmodule Exmen.Discover.Middleware.Math do
     }
 
     case {Keyword.get(meta, :import), Map.get(trans, operation)} do
-      {Kernel, nil}     -> mutate(args, mutations)
-      {Kernel, operand} -> mutate(args, [{operand, meta, args}|mutations])
-      {_, _}            -> mutate(args, mutations)
+      {Kernel, nil}     -> nil
+      {Kernel, operand} -> {:ok, {operand, meta, args}, args}
+      {_, _}            -> nil
     end
   end
 
-  def mutate({_, args}, mutations),    do: mutate(args, mutations)
-  def mutate({_, _, args}, mutations), do: mutate(args, mutations)
-  def mutate([head|tail], mutations),  do: mutate(tail, mutate(head, mutations))
-  def mutate([], mutations),           do: mutations
-  def mutate(_, mutations),            do: mutations
+  def mutate(_), do: nil
 end
