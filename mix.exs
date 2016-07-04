@@ -4,13 +4,11 @@ defmodule Exmen.Mixfile do
   def project do
     [app: :exmen,
      version: "0.1.0",
-     description: "A marvelous mutation testing tool for Elixir",
+     description: description,
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     licenses: ["MIT"],
-     maintainers: ["Thomas Farla"],
-     links: %{"Github" => "https://github.com/TFarla/exmen"},
+     package: package,
      deps: deps()]
   end
 
@@ -19,6 +17,19 @@ defmodule Exmen.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [applications: [:logger]]
+  end
+
+  def description do
+    """
+    A marvelous mutation testing tool for Elixir
+    """
+  end
+
+  def package do
+    [name: :exmen,
+     licenses: ["MIT"],
+     maintainers: ["Thomas Farla"],
+     links: %{"Github" => "https://github.com/TFarla/exmen"}]
   end
 
   # Dependencies can be Hex packages:
