@@ -4,6 +4,7 @@ defmodule Exmen.Mixfile do
   def project do
     [app: :exmen,
      version: "0.1.0",
+     description: "A marvelous mutation testing tool for Elixir",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
