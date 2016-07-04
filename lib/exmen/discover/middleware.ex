@@ -9,6 +9,8 @@ defmodule Exmen.Discover.Middleware do
     case fun.(node) do
       {:ok, new_mutation, next} ->
         mutate(next, [new_mutation|mutations], fun)
+      {:skip, _} ->
+        mutations
       _ ->
         do_mutate(node, mutations, fun)
     end

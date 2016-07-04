@@ -32,5 +32,18 @@ defmodule Exmen.Discover.MathTest do
     assert [:-] == get_operands(mutations)
   end
 
+  test "ignore operands that are not meant to be mathmetical" do
+    ast = quote do
+      Enum.each(1..5, &do_something/1)
+    end
+
+    assert [] == Math.find_mutations(ast)
+  end
+
+  test "should find mutations in short function notation" do
+    ast = quote do: Enum.map(1..5, &(&1 + 1))
+    assert [:-] == get_operands( Math.find_mutations(ast))
+  end
+
   defp get_operands(mutations), do: Enum.map(mutations, &(elem(&1, 0)))
 end
