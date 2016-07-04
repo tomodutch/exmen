@@ -7,6 +7,9 @@ defmodule Exmen.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     licenses: ["MIT"],
+     maintainers: ["Thomas Farla"],
+     links: %{"Github" => "https://github.com/TFarla/exmen"},
      deps: deps()]
   end
 
