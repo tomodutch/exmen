@@ -1,8 +1,7 @@
 defmodule Exmen.DiscovererTest do
   use ExUnit.Case, async: true
 
-  alias Exmen.Discoverer
-  alias Exmen.Discover.Middleware
+  alias Exmen.Discover.{Discoverer, Middleware}
   alias Exmen.Discover.Middleware.Math
 
   test "no middleware" do

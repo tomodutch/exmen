@@ -1,4 +1,4 @@
-defmodule Exmen.Discoverer do
+defmodule Exmen.Discover.Discoverer do
   use GenServer
 
   alias Exmen.Discover.Middleware

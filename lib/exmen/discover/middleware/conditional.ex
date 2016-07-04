@@ -1,4 +1,15 @@
 defmodule Exmen.Discover.Middleware.Conditional do
+  @moduledoc ~S"""
+  Middleware to find mutations in conditionals
+
+  ## Examples
+      iex> "if true, do: 1"
+      iex> |> Code.string_to_quoted
+      iex> |> Exmen.Discover.Middleware.Conditional.find_mutations
+      iex> |> Enum.map(&(elem(&1, 0)))
+      [:unless]
+  """
+
   alias Exmen.Discover.Middleware
 
   def find_mutations(ast) do

@@ -3,10 +3,17 @@ defmodule Exmen.Discover.Middleware.Math do
   Mutator of Math operands
 
   ## Examples
-      iex> ast = quote do: 1 + 1
-      iex> [mutation|_] = Exmen.Discover.Middleware.Math.find_mutations(ast)
-      iex> elem(mutation, 0)
-      :-
+      iex> "(1 + 2 - 3) * 4 / 5"
+      iex> |> Code.string_to_quoted
+      iex> |> Exmen.Discover.Middleware.Math.find_mutations
+      iex> |> Enum.map(&(elem(&1, 0)))
+      [:-, :+, :/, :*]
+
+      iex> "rem(10, 2)"
+      iex> |> Code.string_to_quoted
+      iex> |> Exmen.Discover.Middleware.Math.find_mutations
+      iex> |> Enum.map(&(elem(&1, 0)))
+      [:/]
   """
   alias Exmen.Discover.Middleware
 
