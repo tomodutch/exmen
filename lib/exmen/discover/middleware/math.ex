@@ -1,6 +1,6 @@
 defmodule Exmen.Discover.Middleware.Math do
   @moduledoc """
-  Mutator of Math operands
+  Middleware to discover mutations in mathmetical expressions
 
   ## Examples
       iex> "(1 + 2 - 3) * 4 / 5"

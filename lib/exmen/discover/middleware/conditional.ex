@@ -1,6 +1,6 @@
 defmodule Exmen.Discover.Middleware.Conditional do
   @moduledoc ~S"""
-  Middleware to find mutations in conditionals
+  Middleware to discover mutations in conditionals
 
   ## Examples
       iex> "if true, do: 1"
