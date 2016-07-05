@@ -35,6 +35,18 @@ defmodule Exmen.Discover.DiscovererTest do
     assert mutations == Discoverer.find_mutations(pid, ast)
   end
 
+  test "find mutations from files" do
+    middlewares = [
+      %Middleware{module: Math},
+      %Middleware{module: Conditional}
+    ]
+
+    {:ok, pid} = Discoverer.start_link(middlewares)
+    file = __ENV__.file
+    mutations = Discoverer.find_mutations(pid, Code.string_to_quoted!(File.read!(file)))
+    assert [{file, mutations}] == Discoverer.find_mutations_from_files(pid, [file])
+  end
+
   defp find_mutations(middlewares, ast) do
     Enum.flat_map(middlewares, fn %Middleware{module: module} ->
       module.find_mutations(ast)
